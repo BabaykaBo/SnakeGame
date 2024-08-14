@@ -1,5 +1,7 @@
 ﻿using SnakeGame;
 
+Console.CursorVisible = false;
+
 Coord gridDimensions = new(50, 20);
 Coord snakePos = new(10, 2);
 
@@ -7,10 +9,10 @@ Random rand = new();
 Coord applePos = new(rand.Next(1, gridDimensions.X - 1), rand.Next(1, gridDimensions.Y - 1));
 
 int frameDelayMilSec = 100;
-
-Console.CursorVisible = false;
-
 Direction movementDirection = Direction.Down;
+
+List<Coord> snakePosHistory = [];
+int tailLength = 1;
 
 while (true)
 {
@@ -23,7 +25,7 @@ while (true)
         {
             Coord currentCoord = new(x, y);
 
-            if (snakePos.Equals(currentCoord))
+            if (snakePos.Equals(currentCoord) || snakePosHistory.Contains(currentCoord))
             {
                 Console.Write("■");
             }
@@ -41,6 +43,19 @@ while (true)
             }
         }
         Console.WriteLine();
+    }
+
+    if (snakePos.Equals(applePos))
+    {
+        tailLength++;
+        applePos = new(rand.Next(1, gridDimensions.X - 1), rand.Next(1, gridDimensions.Y - 1));
+    }
+
+    snakePosHistory.Add(new Coord(snakePos.X, snakePos.Y));
+
+    if (snakePosHistory.Count > tailLength)
+    {
+        snakePosHistory.RemoveAt(0);
     }
 
     DateTime time = DateTime.Now;
