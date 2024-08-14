@@ -5,8 +5,17 @@ public class Coord(int x, int y)
     private int x = x;
     private int y = y;
 
-    public int X { get => x;  }
-    public int Y { get => y;  }
+     public int X
+    {
+        get { return x; }
+        set { x = value; }
+    }
+
+    public int Y
+    {
+        get { return y; }
+        set { y = value; }
+    }
 
     public override bool Equals(object? obj)
     {
