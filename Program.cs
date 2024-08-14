@@ -16,7 +16,9 @@ int score = 0;
 List<Coord> snakePosHistory = [];
 int tailLength = 1;
 
-while (true)
+bool runGame = true;
+
+while (runGame)
 {
     Console.Clear();
     Console.WriteLine($"Score: {score}");
@@ -54,6 +56,10 @@ while (true)
         tailLength++;
         score++;
         applePos = new(rand.Next(1, gridDimensions.X - 1), rand.Next(1, gridDimensions.Y - 1));
+    }
+    else if (snakePosHistory.Contains(snakePos))
+    {
+        runGame = false;
     }
     
     if (snakePos.X == 0)
@@ -95,20 +101,22 @@ while (true)
             switch (key)
             {
                 case ConsoleKey.UpArrow:
-                    movementDirection = Direction.Up;
+                    if (movementDirection != Direction.Down) movementDirection = Direction.Up;  
                     break;
                 case ConsoleKey.DownArrow:
-                    movementDirection = Direction.Down;
+                    if (movementDirection != Direction.Up) movementDirection = Direction.Down;
                     break;
                 case ConsoleKey.LeftArrow:
-                    movementDirection = Direction.Left;
+                    if (movementDirection != Direction.Right) movementDirection = Direction.Left;
                     break;
                 case ConsoleKey.RightArrow:
-                    movementDirection = Direction.Right;
+                    if (movementDirection != Direction.Left) movementDirection = Direction.Right;
                     break;
             }
         }
     }
 }
 
-// Console.CursorVisible = true;
+Console.WriteLine("");
+Console.WriteLine("Game over...");
+Console.CursorVisible = true;
