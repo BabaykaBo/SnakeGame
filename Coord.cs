@@ -23,4 +23,23 @@ public class Coord(int x, int y)
     {
         return HashCode.Combine(x, y);
     }
+
+    public void ApplyMovementDirection(Direction direction)
+    {
+        switch (direction)
+        {
+            case Direction.Up:
+                y--;
+                break;
+            case Direction.Down:
+                y++;
+                break;
+            case Direction.Left:
+                x--;
+                break;
+            case Direction.Right:
+                x++;
+                break;
+        }
+    }
 }

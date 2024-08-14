@@ -10,9 +10,12 @@ int frameDelayMilSec = 100;
 
 Console.CursorVisible = false;
 
+Direction movementDirection = Direction.Down;
+
 while (true)
 {
     Console.Clear();
+    snakePos.ApplyMovementDirection(movementDirection);
 
     for (int y = 0; y < gridDimensions.Y; y++)
     {
@@ -40,7 +43,31 @@ while (true)
         Console.WriteLine();
     }
 
-    Thread.Sleep(frameDelayMilSec);
+    DateTime time = DateTime.Now;
+
+    while((DateTime.Now - time).Milliseconds < frameDelayMilSec)
+    {
+        if (Console.KeyAvailable)
+        {
+            ConsoleKey key = Console.ReadKey().Key;
+
+            switch (key)
+            {
+                case ConsoleKey.UpArrow:
+                    movementDirection = Direction.Up;
+                    break;
+                case ConsoleKey.DownArrow:
+                    movementDirection = Direction.Down;
+                    break;
+                case ConsoleKey.LeftArrow:
+                    movementDirection = Direction.Left;
+                    break;
+                case ConsoleKey.RightArrow:
+                    movementDirection = Direction.Right;
+                    break;
+            }
+        }
+    }
 }
 
-Console.CursorVisible = true;
+// Console.CursorVisible = true;
